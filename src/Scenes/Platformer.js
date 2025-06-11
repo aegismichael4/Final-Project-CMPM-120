@@ -32,6 +32,13 @@ class Platformer extends Phaser.Scene {
             collides: true
         });
 
+        //parallax background
+        this.background = this.add.sprite(2875, 360, "background");
+        this.background.setScale(2);
+        this.background.setScrollFactor(0.85);
+        this.background.setDepth(-10);
+        
+
         // set up player
         // default: 125, 550
         // test artifact: 4000, 300

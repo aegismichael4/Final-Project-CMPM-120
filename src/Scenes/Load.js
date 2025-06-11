@@ -15,6 +15,7 @@ class Load extends Phaser.Scene {
         this.load.image("marble_tiles", "marble_packed.png");
         this.load.image("marble_tiles_extruded", "marble_extruded.png");
         this.load.tilemapTiledJSON("heist_json", "heist.json");             // Tilemap in JSON
+        this.load.image("background", "heist_background.png");
 
         // extra sprites
         this.load.spritesheet("artifact", "artifact.png", { frameWidth: 32, frameHeight: 32});
