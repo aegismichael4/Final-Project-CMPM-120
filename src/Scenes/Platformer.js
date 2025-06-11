@@ -11,6 +11,9 @@ class Platformer extends Phaser.Scene {
     preload() {
         // print controls to screen
         document.getElementById('description').innerHTML = '<h2>Controls:<br>A - Move Left // D - Move right<br>S - Slide // Space - Jump';
+
+        // animated lava tiles
+        this.load.scenePlugin('AnimatedTiles', './lib/AnimatedTiles.js', 'animatedTiles', 'animatedTiles');
     }
 
     create() {
@@ -118,6 +121,9 @@ class Platformer extends Phaser.Scene {
 
         // set up arcade physics
         this.player.initPhysics(this.groundBTLayer, this.groundPILayer, this.door, this.artifact);
+
+        // animate tiles
+        this.animatedTiles.init(this.map);
                 
     }
 
