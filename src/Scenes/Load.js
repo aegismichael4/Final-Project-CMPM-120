@@ -29,6 +29,7 @@ class Load extends Phaser.Scene {
         this.load.image("dust_particle", "dust_particle.png");
         this.load.image("pebble_particle", "pebble.png");
         this.load.image("molten_glass_particle", "molten_glass_particle.png");
+        this.load.spritesheet("artifact_vfx", "artifact_vfx.png", {frameWidth: 132, frameHeight: 131 });
 
 
         //audio
@@ -122,6 +123,12 @@ class Load extends Phaser.Scene {
         this.anims.create({
             key: 'artifact-idle',
             frames: this.anims.generateFrameNumbers('artifact', { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'artifact-vfx',
+            frames: this.anims.generateFrameNumbers('artifact_vfx', { start: 0, end: 10 }),
             frameRate: 10,
             repeat: -1
         });

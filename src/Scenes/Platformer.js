@@ -51,8 +51,8 @@ class Platformer extends Phaser.Scene {
         // set up player
         // default: 125, 550
         // test artifact: 4000, 300
-//        this.player = new Player(this, 125, 550, "glass-test");
-        this.player = new Player(this, 4000, 300, "glass-test");
+        this.player = new Player(this, 125, 550, "glass-test");
+//        this.player = new Player(this, 4000, 300, "glass-test");
         this.player.setScale(2);
         this.freezePlayer = false;
 
@@ -90,6 +90,10 @@ class Platformer extends Phaser.Scene {
         this.physics.add.sprite(this.artifact);
         this.artifact.arcadeBody = this.physics.add.existing(this.artifact, true);
         this.artifactCollider = null;
+        this.artifactVFX = this.add.sprite(4068, 360, "artifact_vfx");
+        this.artifactVFX.anims.play("artifact-vfx");
+        this.artifactVFX.setScale(2);
+        this.artifactVFX.setDepth(-1);
 
         // door
         this.door = new Door(this, 18*4, -18 * 3, "door");
@@ -201,7 +205,7 @@ class Platformer extends Phaser.Scene {
 
         if (!this.musicPlaying) {
             this.music = this.sound.add("music", {
-                volume: 0.5,
+                volume: 0.35,
                 loop: true
             }).play();
 
@@ -265,7 +269,13 @@ class Platformer extends Phaser.Scene {
             duration: 200
         });
 
-        this.music_alarm.volume = 0.5;
+        this.tweens.add({
+            targets:  this.artifactVFX,
+            alpha:   0,
+            duration: 200
+        });
+
+        this.music_alarm.volume = 0.35;
 
         this.artifactVisible = false;
         this.artifactCollider.destroy();
