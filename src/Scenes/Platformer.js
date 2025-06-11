@@ -8,6 +8,11 @@ class Platformer extends Phaser.Scene {
         this.physics.world.TILE_BIAS = 36;
     }
 
+    preload() {
+        // print controls to screen
+        document.getElementById('description').innerHTML = '<h2>Controls:<br>A - Move Left // D - Move right<br>S - Slide // Space - Jump';
+    }
+
     create() {
 
         this.map = this.add.tilemap("heist_json", 18, 18, 120, 20);
