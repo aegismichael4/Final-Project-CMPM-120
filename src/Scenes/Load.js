@@ -52,6 +52,9 @@ class Load extends Phaser.Scene {
         this.load.audio("alarm", "alarm.wav");
         this.load.audio("melt", "melt.wav");
         this.load.audio("skid", "skid.wav");
+        this.load.audio("hum_Master", "hum_Master.wav");
+        this.load.audio("music", "The_Artifact-fixed.wav");
+        this.load.audio("music_alarm", "music_alarm.wav");
 
         //font
  //       this.load.bitmapFont('pixel_font', 'megaman_font_1.png', 'megaman_font_1.fnt');

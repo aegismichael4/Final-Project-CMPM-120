@@ -9,9 +9,10 @@ class Platformer extends Phaser.Scene {
     }
 
     preload() {
+
         // print controls to screen
         document.getElementById('description').innerHTML = '<h2>Controls:<br>A - Move Left // D - Move right<br>S - Slide // Space - Jump';
-
+    
         // animated lava tiles
         this.load.scenePlugin('AnimatedTiles', './lib/AnimatedTiles.js', 'animatedTiles', 'animatedTiles');
     }
@@ -50,8 +51,8 @@ class Platformer extends Phaser.Scene {
         // set up player
         // default: 125, 550
         // test artifact: 4000, 300
-        this.player = new Player(this, 125, 550, "glass-test");
-//        this.player = new Player(this, 4000, 300, "glass-test");
+//        this.player = new Player(this, 125, 550, "glass-test");
+        this.player = new Player(this, 4000, 300, "glass-test");
         this.player.setScale(2);
         this.freezePlayer = false;
 
@@ -67,6 +68,7 @@ class Platformer extends Phaser.Scene {
 
         this.input.keyboard.on('keydown-R', () => {
             this.slide.volume = 0;
+            this.music_alarm.volume = 0;
             this.doorSFX.stop();
             this.rockslide.stop();
             this.alarm.stop();
@@ -123,8 +125,8 @@ class Platformer extends Phaser.Scene {
         this.player.initPhysics(this.groundBTLayer, this.groundPILayer, this.door, this.artifact);
 
         // animate tiles
-        this.animatedTiles.init(this.map);
-                
+        this.animatedTiles.init(this.map);    
+
     }
 
     initAudio() {
@@ -191,6 +193,30 @@ class Platformer extends Phaser.Scene {
             loop: true
         });
 
+        this.artifactHum = this.sound.add("hum_Master", {
+            volume: 1,
+            loop: true
+        });
+        this.artifactHum.play();
+
+        if (!this.musicPlaying) {
+            this.music = this.sound.add("music", {
+                volume: 0.5,
+                loop: true
+            }).play();
+
+            this.music_alarm = this.sound.add("music_alarm", {
+                volume: 0,
+                loop: true
+            });
+
+            this.music_alarm.play();
+        }
+
+        
+
+        this.musicPlaying = true;
+
     }
 
     complete() {
@@ -233,12 +259,20 @@ class Platformer extends Phaser.Scene {
 
     flipGravity() {
 
+        this.tweens.add({
+            targets:  this.artifactHum,
+            volume:   0,
+            duration: 200
+        });
+
+        this.music_alarm.volume = 0.5;
+
         this.artifactVisible = false;
         this.artifactCollider.destroy();
         this.artifact.destroy();
 
         this.sirens.activateSirens();
-        this.alarm.play();
+        //this.alarm.play();
 
         this.physics.world.gravity.y = 0;
         this.physics.world.gravity.x = 0;
@@ -374,6 +408,11 @@ class Platformer extends Phaser.Scene {
         this.freezePlayer = freeze;
     }
 
+    artifactSFX() {
+        let distance = 300 / Phaser.Math.Distance.Between(this.player.x, this.player.y, this.artifact.x, this.artifact.y);
+        this.artifactHum.volume = distance;
+    }
+
     update(time, delta) {
 
         if (this.runTimer) this.timer.update(delta);
@@ -384,6 +423,10 @@ class Platformer extends Phaser.Scene {
         if (this.player && !this.freezePlayer) {
             this.adjustRunSFX(delta);
             this.player.update(delta);
+        }
+
+        if (this.player && this.artifactVisible) {
+            this.artifactSFX();
         }
     }
 }

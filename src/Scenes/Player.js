@@ -865,7 +865,13 @@ class Player extends Phaser.GameObjects.Sprite {
 
     //seperate for the "cutscene" to work
     rotateSprite() {
-        this.rotation = -Math.PI/2;
+
+        this.scene.tweens.add({
+            targets: this,
+            rotation: -Math.PI/2,
+            duration: 125,
+        });
+
         this.body.velocity.y = -100;
         this.body.velocity.x = 100;
 
