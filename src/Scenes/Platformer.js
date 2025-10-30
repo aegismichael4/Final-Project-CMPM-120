@@ -11,7 +11,7 @@ class Platformer extends Phaser.Scene {
     preload() {
 
         // print controls to screen
-        document.getElementById('description').innerHTML = '<h2>Controls:<br>A - Move Left // D - Move right<br>S - Slide // Space - Jump';
+        document.getElementById('description').innerHTML = '<h2>Controls:<br>A - Move Left // D - Move right<br>S - Slide<br>Space - Jump<br>R - Restart<br><br>Game by Aegis Michael';
     
         // animated lava tiles
         this.load.scenePlugin('AnimatedTiles', './lib/AnimatedTiles.js', 'animatedTiles', 'animatedTiles');
